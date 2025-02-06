@@ -27,7 +27,7 @@ app.get("/hue/lights", async (req, res) => {
 app.post("/hue/lights/:id", async (req, res) => {
   const lightId = req.params.id;
   const { on } = req.body;
-  
+
   try {
     await axios.put(
       `http://${HUE_BRIDGE_IP}/api/${HUE_API_KEY}/lights/${lightId}/state`,
@@ -49,7 +49,10 @@ app.post("/hue/lights/:id/color", async (req, res) => {
       `http://${HUE_BRIDGE_IP}/api/${HUE_API_KEY}/lights/${lightId}/state`,
       { hue, sat, bri }
     );
-    res.json({ success: true, message: `Couleur de la lumière ${lightId} modifiée` });
+    res.json({
+      success: true,
+      message: `Couleur de la lumière ${lightId} modifiée`,
+    });
   } catch (error) {
     res.status(500).json({ error: "Impossible de changer la couleur" });
   }
